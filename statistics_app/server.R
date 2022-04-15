@@ -11,22 +11,22 @@ library(shiny)
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
-    ## Summary Statistics Server
+    ## KB: Summary Statistics Server
     
     
-    ## Normal Distribution Server
+    ## LC: Normal Distribution Server
     
     
-    ## CTL Server
+    ## PH: CTL Server
     
     
-    ## Hypothesis Tests Server
+    ## LC: Hypothesis Tests Server
     
     
-    ## CI Server
+    ## KB: CI Server
     
     
-    ## Regression Server
+    ## PH: Regression Server
     
     
 })
