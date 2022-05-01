@@ -14,10 +14,7 @@ shinyServer(function(input, output) {
   
   datasetInput <- reactive({
     switch(input$dataset,
-           "all iris data" = iris,
-           "setosa" = subset(iris, iris$Species == "setosa"),
-           "versicolor" = subset(iris, iris$Species == "versicolor"),
-           "virginica" = subset(iris, iris$Species == "virginica"))
+           "all iris data" = iris)
   })
   
   colX <- reactive({
@@ -64,6 +61,11 @@ shinyServer(function(input, output) {
   
   output$calcmeanx <- renderPrint({
     df_iris <- datasetInput()
+    print("values:")
+   print(head(df_iris[,c(input$Xvar)], n = input$obs))
+   print("sum of values:")
+   print(sum(head(df_iris[,c(input$Xvar)], n = input$obs)))
+   print("divide sum of values by total number of observations:")
     mean(head(df_iris[,c(input$Xvar)], n = input$obs))
   })
   
@@ -73,6 +75,11 @@ shinyServer(function(input, output) {
   
   output$calcmeany <- renderPrint({
     df_iris <- datasetInput()
+    print("values:")
+    print(head(df_iris[,c(input$Yvar)], n = input$obs))
+    print("sum of values:")
+    print(sum(head(df_iris[,c(input$Yvar)], n = input$obs)))
+    print("divide sum of values by total number of observations:")
     mean(head(df_iris[,c(input$Yvar)], n = input$obs))
   })
   
@@ -88,7 +95,7 @@ shinyServer(function(input, output) {
   output$devx <- renderPrint({
     df_iris <- datasetInput()
     meanx <-mean(head(df_iris[,c(input$Xvar)], n = input$obs))
-    diff <- head(df_iris[,c(input$Xvar)], n = input$obs) - mean_ppg
+    head(df_iris[,c(input$Xvar)], n = input$obs) - meanx
     
   })
   output$sqdifftext <- renderText({ 
@@ -97,11 +104,25 @@ shinyServer(function(input, output) {
   output$sqdiffx <- renderPrint({
     df_iris <- datasetInput()
     meanx <-mean(head(df_iris[,c(input$Xvar)], n = input$obs))
-    diff <- head(df_iris[,c(input$Xvar)], n = input$obs) - mean_ppg
-    sum(squared_diff) / (length(head(df_iris[,c(input$Xvar)], n = input$obs)) - 1)
+    diff <- head(df_iris[,c(input$Xvar)], n = input$obs) - meanx
+    squared_diff <- diff^2
+    squared_diff
+  })
+  output$varfinaltext <- renderText({ 
+    paste("Finally,sum the square difference and divide by the number of samples minus 1 ")
   })
   
-  
+  output$varfinal <- renderPrint({
+    df_iris <- datasetInput()
+    meanx <-mean(head(df_iris[,c(input$Xvar)], n = input$obs))
+    diff <- head(df_iris[,c(input$Xvar)], n = input$obs) - meanx
+    squared_diff <- diff^2
+    print("Take the sum of the squared difference")
+    print(sum(squared_diff))
+    print("Divide by the number of samples minus 1")
+    sum(squared_diff) / (length(head(df_iris[,c(input$Xvar)], n = input$obs)) - 1)
+  })
+ 
   
   # Show the first n observations
   output$view <- renderTable({
@@ -111,44 +132,15 @@ shinyServer(function(input, output) {
     paste("You have selected to show ", input$obs," lines.")
   })
   
-  
-  # Show a simple x,y plot
-  output$simplePlot <- renderPlot({
-    
-    df_iris <- datasetInput()
-    plot(df_iris[,c(input$Xvar,input$Yvar)], xlab = input$Xvar, ylab = input$Yvar,
-         main=toupper(ifelse(input$dataset == "all iris data", "iris", input$dataset)), pch=16, cex = 2,
-         col = ifelse(df_iris$Species == "setosa", palette()[1], 
-                      ifelse(df_iris$Species == "versicolor", palette()[2], palette()[3])) )
-    
-    legend("bottomright", legend = unique(df_iris[,5]), 
-           col = myColors(), title = expression(bold("Iris.Species")),
-           pch = 16, bty = "n", pt.cex = 2, 
-           cex = 0.8, text.col = "black", horiz = FALSE, inset = c(0.05, 0.05))
-  })
-  
   # Show boxplot
   output$boxPlot <- renderPlot({
     df_iris <- datasetInput()
-    
-    if (input$dataset == "all iris data") {
       boxplot(df_iris[,c(input$Yvar)] ~ df_iris[,5], xlab = "Species", ylab = input$Yvar, main = "IRIS", 
               border = "black", col = myColors())
-    }
-    else {
-      boxplot(df_iris[,c(input$Yvar)], xlab = "Species", ylab = input$Yvar, main = toupper(input$dataset),
-              border = "black", col = myColors())
-    }
-  })
-  
-  # Create a .csv file with dataframe inside
-  output$downloadData <- downloadHandler(
-    filename = function() {
-      paste('data-Iris-', Sys.Date(), '.csv', sep='')
-    },
-    content = function(con) {
-      write.csv(iris, con)
-    }
-  )
-  
+    })
 })
+
+  
+ 
+  
+
