@@ -4,14 +4,14 @@ library(shiny)
 shinyUI(fluidPage(
   
   # Application title
-  titlePanel("Understanding Summary Statistics"),
+  titlePanel("Computing Basic Statistics"),
   
   # Sidebar with controls 
   sidebarLayout(
     sidebarPanel(
       h3("Filtering data"),
       selectInput("dataset", "Choose a dataset (or a subset) :", 
-                  choices = c("all iris data", "setosa", "versicolor", "virginica")),
+                  choices = c("all iris data")),
       selectInput("Xvar", "X variable", 
                   choices = c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width")),
       selectInput("Yvar", "Y variable", 
@@ -30,15 +30,16 @@ shinyUI(fluidPage(
     mainPanel(
       tabsetPanel(
         tabPanel("Table", h1("Table"), textOutput("NbRows"), tableOutput("view")),
-        tabPanel("Plot", h1("Scatterplot"), plotOutput("simplePlot"), h1("Boxplot"), plotOutput("boxPlot")),
-        tabPanel("Descriptive statistics", h1("Descriptive statistics"),
-                 verbatimTextOutput("summary"),h1("Calculating Means"),textOutput("meantext"),
+        #tabPanel("Plot", h1("Scatterplot"), plotOutput("simplePlot"), h1("Boxplot"), plotOutput("boxPlot")),
+        tabPanel("Descriptive statistics", h1("Basic Statistics Calculations"),
+                 h1("Calculating Means"),textOutput("meantext"),
                  textOutput("meantextx"),verbatimTextOutput("calcmeanx"),
                  textOutput("meantexty"),verbatimTextOutput("calcmeany"),
-                 textOutput("vartext"),
-                 textOutput("output$vartextx"),verbatimTextOutput("output$devx"),
-                 textOutput("output$sqdifftext"),verbatimTextOutput("output$sqdiffx"),
-                 
+                 h1("Calculating Variance"),textOutput("vartext"), textOutput("vartextx"),
+                 verbatimTextOutput("devx"),
+                 textOutput("sqdifftext"),verbatimTextOutput("sqdiffx"),
+                 textOutput("varfinaltext"),verbatimTextOutput("varfinal"),
+                 h1("Boxplot"), plotOutput("boxPlot")
                  )
       ) 
     )
