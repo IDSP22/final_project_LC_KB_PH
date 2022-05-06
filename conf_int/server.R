@@ -1,6 +1,10 @@
 # Define server logic required to summarize and view the selected dataset
 
-create_plot= function(n = 100, pop.mean = input$mean, pop.sd = input$variance, conf.lvl = (input$conf.level/100)) {
+
+
+#insert image of formula 
+
+create_plot= function(n = input$nsamp, pop.mean = input$mean, pop.sd = input$variance, conf.lvl = (input$conf.level/100)) {
   
   plot(NULL
        ,xlim = c(pop.mean-pop.sd,pop.mean+pop.sd)
@@ -43,9 +47,14 @@ shinyServer(function(input, output) {
     thePlot()
   })
   
-  output$txt <- renderText({ 
-    paste("The sample mean is:", input$mean)}
+  # Add intro text into confidence intervals and what they do 
+  output$introtxt <- renderText({ 
+    paste("A confidence interval gives us a range of values between which we would find our true estimate with high certainty. 
+        For example, when we are calculating the 95% confidence interval, we can say that we 95% that the value will fall between
+        the calculated range. You can calculate this range through the following formula: ")}
   )
+  
+  #Image inserted
   
 })
 
@@ -54,4 +63,3 @@ shinyServer(function(input, output) {
   
   
   
-
