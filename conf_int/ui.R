@@ -31,9 +31,6 @@ shinyUI(
                                   ,min = 1
                                   ,max = 99)
                     ,actionButton("simulate", label = "Simulate")
-                    # ,wellPanel(
-                    #   helpText("This app is a demonstration of confidence intervals. The length of the bars are the size of the intervals. If the interval does not overlap with the population value (the black vertical line) then it is colored red to indicate a type 1 error.  Try increasing the sample size and see what happens")
-                    # )
                     ,align="center")
     )
     
@@ -41,8 +38,11 @@ shinyUI(
     # number of observations. Note the use of the h4 function to provide
     # an additional header above each output section.
     ,mainPanel(
+      textOutput("introtxt"),
+      img(src = "Screen Shot 2022-05-06 at 6.32.57 PM.png", height = 370, width = 380),
       plotOutput('conf.plot'),
-      textOutput("txt")
+      textOutput("explanation")
+      
     )
   )
 )
