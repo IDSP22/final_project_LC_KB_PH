@@ -16,8 +16,7 @@ shinyUI(fluidPage(
     titlePanel("Middle School Sprint"),
     h5("We timed 1000 middle-school boys in a 20-yard sprint and found 
        that their times fell on a Normal distribution with a mean of 6.5 
-       seconds and a standard deviation of 0.5 seconds. The plot below depicts 
-       this distribution."),
+       seconds and a standard deviation of 0.5 seconds."),
     h5("The vertical line below the distribution represents a time of interest,
        or possible observed sprint time. The shaded area represents the 
        probability that a randomly selected student ran faster than this sprint
@@ -32,7 +31,8 @@ shinyUI(fluidPage(
     sidebarLayout(
         sidebarPanel(
             radioButtons(inputId = "test", 
-                         label = "Evaluate if the student is faster or slower:", 
+                         label = "Evaluate if the student is faster or slower 
+                         than a certain time:", 
                          choices = c("Faster", "Slower"),
                          selected = "Faster"),
             sliderInput(inputId = "point",
