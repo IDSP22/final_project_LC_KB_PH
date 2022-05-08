@@ -32,19 +32,18 @@ shinyUI(fluidPage(
     sidebarLayout(
         sidebarPanel(
             radioButtons(inputId = "test", 
-                         label = "The probability that a randomly selected 
-                         student is:", 
+                         label = "Evaluate if the student is faster or slower:", 
                          choices = c("Faster", "Slower"),
                          selected = "Faster"),
             sliderInput(inputId = "point",
-                        label = "than this time:",
+                        label = "Time to compare student to:",
                         min = 4.5,
                         max = 8.5,
-                        value = 6),
-            uiOutput("probability")),
+                        value = 6)),
 
         # Show a plot of the generated distribution
         mainPanel(
-            plotOutput("distPlot")
+            plotOutput("distPlot"),
+            uiOutput("probability")
         )
 )))

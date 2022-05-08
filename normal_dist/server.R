@@ -49,8 +49,20 @@ shinyServer(function(input, output) {
     })
     ## Calculate probability
     output$probability <- renderUI({
-        strong(paste0("is ", round(pnorm(input$point, mean = 6.5, sd = 0.5, 
-                                lower.tail = lower_side()), 3), "."))
+        if(lower_side() == TRUE){
+            strong(paste0("The probability that a randomly selected 
+                         student ran the sprint in less than ", 
+                          input$point, " seconds is ", 
+                          round(pnorm(input$point, mean = 6.5, sd = 0.5, 
+                                      lower.tail = lower_side()), 3), "."))
+        }
+        else{
+            strong(paste0("The probability that a randomly selected 
+                         student ran the sprint in more than ", 
+                          input$point, " seconds is ", 
+                          round(pnorm(input$point, mean = 6.5, sd = 0.5, 
+                                      lower.tail = lower_side()), 3), "."))
+        }
         })
 })
 
