@@ -1,4 +1,5 @@
 library(shiny)
+library(shinyBS)
 
 # Define UI for application that explains hypothesis testing
 shinyUI(fluidPage(
@@ -11,17 +12,12 @@ shinyUI(fluidPage(
        both pretty good at the game, but you think you are actually better than
        your friend. But it is hard to tell for sure because you win some rounds
        and lose other rounds, simply due to chance."),
-    h6("We can use hypothesis testing to evaluate if the results of a random 
-       sampling of games provides sufficient evidence to conclude if you are in
-       fact better than your friend."),
-    h6("Increasing the amount of games played will reduce the chance of seeing 
-    an untrue pattern of wins or losses due to random chance."),
-    h6("Increasing this probability will make it so the random samples lean in 
-    your favor. You will see that even though the probabilities are in your 
-    favor, your friend will still win some games."),
-    h6("Increasing the significance level will make it such that you need less 
-    evidence to conclude that you are better than your friend. However, this 
-    will also make it so that we are less confident in the conclusions."),
+    h6("Use the button below to simulate playing an individual game with your friend"),
+    actionButton("single_run","Simulate Game!"),
+    uiOutput("single_output"),
+    h6("If we simulated a bunch of games, we could use hypothesis testing to 
+    see if the results have sufficient evidence to conclude that you are in
+       fact better than your friend. Use the simulator below to test this."),
     h6(strong("The null hypothesis is: You and your friend 
               are equally good at this game.")),
     h6(strong("The alternative hypothesis is: You are better than your friend 
@@ -34,18 +30,24 @@ shinyUI(fluidPage(
             numericInput("n_rounds", 
                          "Enter the number of rounds to play:",
                          min = 50, value = 65, max = 100),
+            bsTooltip(id = "n_rounds", 
+                      title = "Increasing the amount of games played will reduce the chance of seeing an untrue random pattern of wins or losses."),
             sliderInput("p_you_win",
                         "Choose the probability that YOU win a given round:",
                         min = 0,
                         max = 1,
                         value = 0.65),
+            bsTooltip(id = "p_you_win", 
+                      title = "Increasing this probability will make it so the random samples lean in your favor."),
             sliderInput("sig_level",
                         "Significance Level:",
                         min = 0.01,
                         max = 0.3,
                         value = 0.05),
+            bsTooltip(id = "sig_level", 
+                      title = "Increasing the significance level will make it so that you need less evidence to conclude that you are better than your friend, but you will also be less confident in the conclusions."),
             actionButton("resample",
-                         "Re-run simulation")
+                         "Run simulation")
         ),
         
         ## Show a plot of the generated outcomes, the test p-val, and conclusion

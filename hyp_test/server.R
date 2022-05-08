@@ -3,6 +3,20 @@ library(tidyverse)
 
 # Define server logic required to run the hypothesis test app
 shinyServer(function(input, output) {
+    ## Generate single game simulation
+    single_game_result <- eventReactive(input$single_run, {
+        result <- sample(c("You won!", "Your friend won"), 1)
+        return(result)
+    })
+    
+    output$single_output <- renderUI({
+        if(is.null(single_game_result()) == TRUE){
+            paste("")
+        }
+        else{
+            paste(single_game_result())
+        }
+    })
     
     ## Generate data for distributions
     game_dat <- eventReactive(input$resample, {
