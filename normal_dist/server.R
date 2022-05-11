@@ -30,8 +30,8 @@ shinyServer(function(input, output) {
             ggplot(data = dat(), aes(time, dist)) +
                 geom_line() +
                 theme_light() +
-                geom_segment(aes(x = input$point, y = 0, xend = input$point, 
-                                 yend = dist[which(time == input$point)])) +
+                #geom_segment(aes(x = input$point, y = 0, xend = input$point, 
+                #                 yend = dist[which(time == input$point)])) +
                 geom_area(data = dplyr::filter(dat(), time <= input$point), 
                           aes(x = time, y = dist), alpha = 0.2) +
                 labs(x = "Time", y = "Density")
@@ -40,8 +40,8 @@ shinyServer(function(input, output) {
             ggplot(data = dat(), aes(time, dist)) +
                 geom_line() +
                 theme_light() +
-                geom_segment(aes(x = input$point, y = 0, xend = input$point, 
-                                 yend = dist[which(time == input$point)])) +
+                #geom_segment(aes(x = input$point, y = 0, xend = input$point, 
+                #                 yend = dist[which(time == input$point)])) +
                 geom_area(data = dplyr::filter(dat(), time >= input$point), 
                           aes(x = time, y = dist), alpha = 0.2) +
                 labs(x = "Time", y = "Density")
@@ -66,3 +66,4 @@ shinyServer(function(input, output) {
         })
 })
 
+## 6.8-7.8 by 0.25 -- 
