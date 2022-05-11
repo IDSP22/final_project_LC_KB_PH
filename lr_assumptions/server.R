@@ -119,4 +119,24 @@ shinyServer(function(input, output, session) {
     grid.arrange(lf, res, qqn, pcf, nrow = 2)
     
   })
+   
+  output$list <- renderUI({
+    linear_false <- "<li> When the linearity assumption is switched off you can see that a staight line does not capture the true pattern of the data
+    and the residuals are not uniformly distributed around 0"
+    homosc_false <- "<li> When the erros are not homoscedastic then they are correlated with X, this can be observed in the funnel-like pattern of the residuals"
+    indep_false <- "<li> When the independence assumption is violated, errors are correlated to each other. This can be diagnosed through significant autocorrelations 
+    in the partial autocorrelation plot (bottom right)"
+    normal_false <- "<li> When the errors are not normally distributed, they do not fall on a straight line in the Normal QQ Plot (bottom left)"
+    assum1 <- ifelse(linear(), "", linear_false)
+    assum2 <- ifelse(homoscedastic(), "", homosc_false)
+    assum3 <- ifelse(independent(), "", indep_false)
+    assum4 <- ifelse(normal(), "", normal_false)
+    
+    
+    HTML("<ul>", assum1, assum2, assum3, assum4, 
+         "</li>"
+         )
+    })
+  
+
 })
